@@ -1,24 +1,26 @@
 import { takeLatest, retry, put } from 'redux-saga/effects';
-import { failedGenres, setGenres, Types as MoviesTypes } from '../ducks/movies';
+import {
+  faileByGenre, setByGenre, Types as MoviesTypes,
+} from '../ducks/movies';
 import { API } from '~/services';
 
 const SECOND = 1000;
 
-function* getGenres() {
+function* discoverMovies({ page, language, with_genres }) {
   try {
-    console.log('[getGenres] getGenres');
-    const response = yield retry(3, 1 * SECOND, API.getMoviesGenresList, {});
-    const genres = response.data;
-    console.log('[getGenres] Data', response.data?.genres);
-    yield put(setGenres(genres));
+    console.log('[discoverMovies] discoverMovies');
+    const response = yield retry(3, 1 * SECOND, API.getDiscoverMovies, { page, language: language || 'en-US', with_genres });
+    const genreMovies = response.data;
+    console.log('[discoverMovies] Data', response.data);
+    yield put(setByGenre({ ...genreMovies, genre: with_genres[0] }));
   } catch (error) {
-    console.log('[getGenres] Error -', error?.message);
-    yield put(failedGenres(error));
+    console.log('[discoverMovies] Error -', error?.message);
+    yield put(faileByGenre(error));
   }
 }
 
-export function* getGenresSaga() {
-  yield takeLatest(MoviesTypes.FETCH_GENRES, getGenres);
+export function* discoverMoviesSaga() {
+  yield takeLatest(MoviesTypes.FETCH_BY_GENRE, discoverMovies);
 }
 
-export default getGenresSaga;
+export default discoverMoviesSaga;

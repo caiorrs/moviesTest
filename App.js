@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
@@ -26,6 +27,7 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <ThemeProvider theme={theme}>
           <NavigationContainer>
+            <StatusBar barStyle="light-content" />
             <Navigator />
           </NavigationContainer>
         </ThemeProvider>

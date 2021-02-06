@@ -12,3 +12,11 @@ export const Scroll = styled.ScrollView.attrs({
     paddingBottom: 50,
   },
 })``;
+
+export const Title = styled.Text`
+  font-size: 18px;
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: bold;
+  margin-top: 20px;
+  padding: 10px;
+`;

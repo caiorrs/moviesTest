@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useConfiguration } from '~/hooks';
+import { useLanguage } from '~/language';
 import { API } from '~/services';
-import { movieDetailsResponse } from '~/services/types';
+import { priceMasker } from '~/utils';
+// import { movieDetailsResponse } from '../../services/types';
 import {
   Wrapper, HeaderWrapper, PosterWrapper, InfoWrapper, PosterTitle, Rating, DetailsWrapper,
   StatsWrapper, StatsTitle, StatsValue, DescriptionWrapper, DescriptionTitle, DescriptionValue,
@@ -15,6 +18,8 @@ const Details = ({ route }) => {
   const [error, setError] = useState(null);
   // const [movieDetails, setMovieDetails] = useState<movieDetailsResponse | null>(null);
   const [movieDetails, setMovieDetails] = useState(null);
+
+  const {DetailStrings} = useLanguage()
 
   const { baseURL, backdropSizes } = useConfiguration();
   const backdropSize = backdropSizes[3];
@@ -38,7 +43,9 @@ const Details = ({ route }) => {
     getMovieDetails();
   }, []);
 
-  // console.warn({ movieDetails });
+  const movieGenres = useMemo(() => {
+    return movieDetails?.genres?.map((genre) => genre?.name).join(", ")
+  }, [movieDetails])
 
   if (isLoading || movieDetails === null) {
     return (
@@ -53,8 +60,8 @@ const Details = ({ route }) => {
       <HeaderWrapper>
         {/* <Header /> */}
       </HeaderWrapper>
-      <Scroll>
-        <PosterWrapper source={{ uri: `${baseURL}${backdropSize}${movieDetails?.backdrop_path}` }}>
+      <Scroll stickyHeaderIndices={[0]} showsVerticalScrollIndicator={false}>
+        <PosterWrapper source={{ uri: `${baseURL}${backdropSize}${movieDetails?.backdrop_path || movieDetails?.poster_path}` }}>
           <InfoWrapper>
             <PosterTitle>{movieDetails?.title}</PosterTitle>
             <Rating>{`${movieDetails?.vote_average.toFixed(1)} / 10`}</Rating>
@@ -62,19 +69,26 @@ const Details = ({ route }) => {
         </PosterWrapper>
         <DetailsWrapper>
           <DescriptionWrapper>
-            <DescriptionTitle>Overview</DescriptionTitle>
+            <DescriptionTitle>{DetailStrings.overview}</DescriptionTitle>
             <DescriptionValue>{movieDetails?.overview}</DescriptionValue>
           </DescriptionWrapper>
+          <StatsTitle>{DetailStrings.moreInfo}</StatsTitle>
           <StatsWrapper>
-            <StatsTitle>Revenue</StatsTitle>
-            <StatsValue>{movieDetails?.revenue}</StatsValue>
-            <StatsTitle>Budget</StatsTitle>
-            <StatsValue>{movieDetails?.budget}</StatsValue>
-            <StatsTitle>Genres</StatsTitle>
-            <StatsValue>{movieDetails?.genres?.map((genre) => genre?.name)}</StatsValue>
-            <StatsTitle>Website</StatsTitle>
-            <StatsValue>{movieDetails?.homepage}</StatsValue>
-            <StatsTitle>Original Title</StatsTitle>
+            <StatsTitle>{DetailStrings.year}</StatsTitle>
+            <StatsValue>{moment(movieDetails?.release_date).format("YYYY")}</StatsValue>
+            <StatsTitle>{DetailStrings.revenue}</StatsTitle>
+            <StatsValue>{priceMasker(movieDetails?.revenue)}</StatsValue>
+            <StatsTitle>{DetailStrings.budget}</StatsTitle>
+            <StatsValue>{priceMasker(movieDetails?.budget)}</StatsValue>
+            <StatsTitle>{DetailStrings.genres}</StatsTitle>
+            <StatsValue>{movieGenres}</StatsValue>
+            {movieDetails?.homepage && 
+            <>
+              <StatsTitle>{DetailStrings.website}</StatsTitle>
+              <StatsValue>{movieDetails?.homepage}</StatsValue>
+            </>
+            }
+            <StatsTitle>{DetailStrings.originalTitle}</StatsTitle>
             <StatsValue>{movieDetails?.original_title}</StatsValue>
           </StatsWrapper>
         </DetailsWrapper>

@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
-import { Wrapper, Scroll } from './styles';
+import { Wrapper, Scroll, Title } from './styles';
 import type { discoverType } from '~/services/types';
-
 import { MoviesBanner, MoviesList } from '~/components';
 import { API } from '~/services';
+import { useLanguage } from '~/language';
 
 const Home = () => {
   const { loading: configLoading, configuration } = useSelector((state) => state.AppReducer);
-  const { trending } = useSelector((state) => state.MoviesReducer);
+  const { trending, genres } = useSelector((state) => state.MoviesReducer);
   const [latestPage, setLatestPage] = useState({});
   const dispatch = useDispatch();
+  const { HomeStrings, DetailStrings } = useLanguage();
 
   const navigation = useNavigation();
 
@@ -20,8 +21,19 @@ const Home = () => {
     try {
       const result = await API.getDiscoverMovies({ page, with_genres });
       console.warn(result?.data);
+      return { ...result?.data, genreId: with_genres };
     } catch (error) {
-      console.warn(error?.response.data);
+      console.warn(error?.message);
+    }
+  };
+
+  const getEveryGenre = async () => {
+    const ids = genres?.genres?.reduce((acc, curr) => [...acc, curr.id], []);
+    try {
+      const results = await Promise.all(ids.map((id) => getDiscoverMovies({ page: 1, with_genres: [id] })));
+      console.log({ results });
+    } catch (error) {
+      console.warn(error.message);
     }
   };
 
@@ -39,21 +51,20 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    if (configuration) {
-      console.warn({ configuration });
-    }
-  }, [configuration]);
-
   const onChooseMovie = ({ id }) => {
-    navigation.navigate('Details', { movieId: id });
+    navigation.navigate('Details', { movieId: id, name: DetailStrings.title });
   };
+
+  useEffect(() => {
+    if (genres?.genres?.length) getEveryGenre();
+  }, [genres]);
 
   if (configLoading || !trending?.results?.length) return <ActivityIndicator />;
 
   return (
     <Wrapper>
-      <Scroll>
+      <Scroll showsVerticalScrollIndicator={false}>
+        <Title>{HomeStrings.trending}</Title>
         <MoviesBanner
           movies={trending?.results}
           onChoose={onChooseMovie}
