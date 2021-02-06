@@ -15,11 +15,11 @@ const APIInstance = axios.create({
 });
 
 class API {
-  static getDiscoveryMovies({page, language, region}: Types.discoveryType): Promise<AxiosResponse<Types.discoveryResponse>> {
-    return APIInstance.get('/discover/movie/', {params: { page, language, region }});
+  static getDiscoverMovies({page=1, language="en-US", with_genres}: Types.discoverType): Promise<AxiosResponse<Types.discoverResponse>> {
+    return APIInstance.get('/discover/movie/', { params: { page, language, with_genres } });
   }
 
-  static getTrending({ media_type, time_window }: Types.trendingType): Promise<AxiosResponse<Types.trendingResponse>> {
+  static getTrending({ media_type="movie", time_window="week" }: Types.trendingType): Promise<AxiosResponse<Types.trendingResponse>> {
     return APIInstance.get(`trending/${media_type}/${time_window}`, {});
   }
 

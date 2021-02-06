@@ -6,13 +6,13 @@ const SECOND = 1000;
 
 function* getConfiguration() {
   try {
-    console.warn('[getConfiguration] getConfiguration');
+    console.log('[getConfiguration] getConfiguration');
     const response = yield retry(3, 1 * SECOND, API.getAPIConfiguration);
     const configuration = response.data;
-    console.warn('[getConfiguration] Data', response.data);
+    console.log('[getConfiguration] Data', response.data);
     yield put(setConfiguration(configuration));
   } catch (error) {
-    console.warn('[getConfiguration] Error -', error?.message);
+    console.log('[getConfiguration] Error -', error?.message);
     yield put(failedConfiguration(error));
   }
 }

@@ -7,12 +7,13 @@ import rootReducer from './ducks';
 import rootSaga from './sagas';
 
 const appFilter = createWhitelistFilter('AppReducer', ['configuration']);
+const moviesFilter = createWhitelistFilter('MoviesReducer', ['genres', 'trending']);
 
 const persistConfig = {
   key: 'AppPersist',
-  transforms: [appFilter],
+  transforms: [appFilter, moviesFilter],
   storage: AsyncStorage,
-  whitelist: ['AppReducer'],
+  whitelist: ['AppReducer', 'MoviesFilter'],
 };
 
 const sagaMiddleware = createSagaMiddleware();

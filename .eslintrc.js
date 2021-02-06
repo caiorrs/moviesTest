@@ -16,7 +16,8 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-named-as-default': 'off',
     'import/extensions': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'react/prop-types': 'off'
   },
   globals: {
     __DEV__: true,

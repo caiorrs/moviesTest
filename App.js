@@ -6,9 +6,9 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import Navigator from '~/navigation';
 import theme from './src/assets/theme';
-import { API } from '~/services';
 import store, { persistor } from '~/store';
 import { fetchConfiguration } from '~/store/ducks/app';
+import { fetchGenres, fetchTrending } from '~/store/ducks/movies';
 
 if (__DEV__) {
   import('./ReactotronConfig').then(() => console.log('Reactotron Configured'));
@@ -17,6 +17,8 @@ if (__DEV__) {
 const App = () => {
   useEffect(() => {
     store.dispatch(fetchConfiguration());
+    store.dispatch(fetchGenres());
+    store.dispatch(fetchTrending());
   }, []);
 
   return (

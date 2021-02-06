@@ -8,13 +8,13 @@ export type searchType = {
   page: Number;
 }
 
-export type discoveryType = {
+export type discoverType = {
   page: number;
   language: string;
-  region: string;
+  with_genres: Array<number>;
 }
 
-export type discoveryResponse = {
+export type discoverResponse = {
   page: Number;
   results: Array<searchResult>;
   total_results: number;
@@ -102,7 +102,7 @@ export type spokenLanguageType = {
   name: string;
 }
 
-export type movieDetailsResponse = {
+export interface movieDetailsResponse {
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: null | Object;
