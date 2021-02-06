@@ -39,7 +39,9 @@ const Home = () => {
   const getSomeData4 = async () => {
     try {
       const result = await API.getMovieSearchResults({ query: 'deadpool' });
-      console.warn(result?.data?.results);
+      const firstMovieId = result?.data?.results[0].id;
+      const detailsResult = await API.getMovieDetails({ movie_id: firstMovieId });
+      console.warn(detailsResult.data.homepage);
       setData(result?.data);
     } catch (error) {
       console.warn(error?.message);

@@ -34,6 +34,10 @@ class API {
   static getAPIConfiguration(): Promise<AxiosResponse<Types.configurationResponse>>{
     return APIInstance.get('configuration', {})
   }
+
+  static getMovieDetails({movie_id, language = 'en-US'}: Types.movieDetails): Promise<AxiosResponse<Types.movieDetailsResponse>>{
+    return APIInstance.get(`movie/${movie_id}`, { params: { language } })
+  }
 }
 
 export default API;
