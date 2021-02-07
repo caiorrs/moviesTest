@@ -2,6 +2,9 @@ export const HomeStrings = {
   trending: 'Trending',
   title: 'Movies',
   loading: 'Please wait while loading',
+  reload: 'RELOAD',
+  errorMessage: 'Error on getting movies',
+  search: 'Search'
 };
 
 export const DetailStrings = {
@@ -15,4 +18,14 @@ export const DetailStrings = {
   genres: 'Genres',
   website: 'Website',
   originalTitle: 'Original Title',
+  unknown: 'Unknown',
+  duration: 'Runtime',
+  errorMessage: 'Error on getting information about this movie',
+  reload: 'RELOAD',
+};
+
+export const SearchStrings = {
+  hint: 'Type something to search',
+  noResults: 'No results found',
+  placeholder: "Wonder Woman, Avengers, Star Wars..."
 };

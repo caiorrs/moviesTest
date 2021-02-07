@@ -17,7 +17,9 @@ module.exports = {
     'import/no-named-as-default': 'off',
     'import/extensions': 'off',
     'no-console': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'react/jsx-props-no-spreading': 'off'
+    'no-use-before-define': 'off'
   },
   globals: {
     __DEV__: true,

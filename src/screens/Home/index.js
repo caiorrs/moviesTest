@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/core';
-import { Wrapper, Scroll, Title } from './styles';
+import { useNavigation } from '@react-navigation/native';
+import {
+  Wrapper, Scroll, Title, HeaderWrapper, Touchable, IconWrapper,
+  ErrorText, ReloadLabel, SearchText
+} from './styles';
 import type { discoverType } from '~/services/types';
 import { MoviesBanner, MoviesList } from '~/components';
 import { API } from '~/services';
 import { useLanguage } from '~/language';
-import { setByGenre } from '~/store/ducks/movies';
+import { fetchGenres, fetchTrending, setByGenre } from '~/store/ducks/movies';
+import { SearchIcon } from '~/assets/icons';
+import theme from '~/assets/theme';
 
 const Home = () => {
   const { loading: configLoading } = useSelector((state) => state.AppReducer);
-  const { trending, genres, byGenre } = useSelector((state) => state.MoviesReducer);
+  const {
+    trending, genres, byGenre, errorTrending, loadingTrending, errorGenres, loadingGenres,
+  } = useSelector((state) => state.MoviesReducer);
   const [latestPage, setLatestPage] = useState({});
   const dispatch = useDispatch();
   const { HomeStrings, DetailStrings } = useLanguage();
   const navigation = useNavigation();
 
+  useEffect(() => {
+    if (genres?.genres?.length) getEveryGenre();
+  }, [genres]);
+
   const getDiscoverMovies = async ({ page, with_genres }: discoverType) => {
     try {
       const result = await API.getDiscoverMovies({ page, with_genres });
-      console.warn(result?.data);
       return { ...result?.data, genreId: with_genres };
     } catch (error) {
       console.warn(error?.message);
@@ -37,7 +47,6 @@ const Home = () => {
           genreId: id,
         };
       }));
-      console.warn({ results: results[0].result.results[0].title });
       dispatch(setByGenre(results));
     } catch (error) {
       console.warn(error.message);
@@ -62,14 +71,53 @@ const Home = () => {
     navigation.navigate('Details', { movieId: id, name: DetailStrings.title });
   };
 
-  useEffect(() => {
-    if (genres?.genres?.length) getEveryGenre();
-  }, [genres]);
+  const onPressSearch = () => {
+    navigation.navigate("Search")
+  };
 
-  if (configLoading || !trending?.results?.length) return <ActivityIndicator />;
+  if (configLoading || loadingTrending || loadingGenres) {
+    return (
+      <Wrapper>
+        <ActivityIndicator size="large" />
+      </Wrapper>
+    );
+  }
+
+  if (errorGenres || errorTrending) {
+    const getHomeInfos = () => {
+      dispatch(fetchTrending())
+      dispatch(fetchGenres())
+    }
+
+    return (
+      <Wrapper>
+        <ErrorText>{HomeStrings.errorMessage}</ErrorText>
+        <Touchable 
+          style={{paddingVertical: 10, paddingHorizontal: 15, borderRadius: 10, backgroundColor: theme.colors.accent}}
+          onPress={getHomeInfos}
+        >
+          <ReloadLabel>{HomeStrings.reload}</ReloadLabel>
+        </Touchable>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
+      <HeaderWrapper>
+        <IconWrapper>
+          <Touchable
+            hitSlop={{
+              top: 20, bottom: 20, left: 20, right: 20,
+            }}
+            onPress={onPressSearch}
+            style={{flexDirection: 'row', alignItems: 'center', paddingVertical: 5, paddingHorizontal: 5, borderRadius: 10, backgroundColor: theme.colors.accent}}
+          >
+            <SearchText>{HomeStrings.search}</SearchText>
+            <SearchIcon height={30} width={30} />
+          </Touchable>
+        </IconWrapper>
+      </HeaderWrapper>
       <Scroll showsVerticalScrollIndicator={false}>
         <Title>{HomeStrings.trending}</Title>
         <MoviesBanner
@@ -77,9 +125,7 @@ const Home = () => {
           onChoose={onChooseMovie}
         />
         {byGenre?.map((genre) => {
-          // console.warn({ genre });
           const genreName = genres?.genres?.find((item) => item.id === genre?.result?.genreId[0])?.name;
-          // console.warn(genre);
           return (
             <MoviesList
               movies={genre?.result?.results}

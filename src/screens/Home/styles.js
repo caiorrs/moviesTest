@@ -17,6 +17,36 @@ export const Title = styled.Text`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.text};
   font-weight: bold;
-  margin-top: 20px;
   padding: 10px;
+`;
+
+export const HeaderWrapper = styled.View`
+  padding: 10px;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+export const Touchable = styled.TouchableOpacity``;
+
+export const IconWrapper = styled.View``;
+
+export const ErrorText = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 18px;
+  max-width: 70%;
+  text-align: center;
+`;
+
+export const ReloadLabel = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+export const SearchText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.text};
+  margin-horizontal: 10px;
 `;

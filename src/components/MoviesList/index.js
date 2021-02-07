@@ -8,7 +8,7 @@ const MoviesList = ({
   title, movies, onEndReached, onChooseMovie, genreId,
 }) => {
   const renderItem = ({ item: movie }) => (
-    <ItemWrapper>
+    <ItemWrapper key={movie?.id}>
       <MoviesListItem
         movie={movie}
         onSelectMovie={onChooseMovie}

@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Screens from '~/screens';
 import theme from '~/assets/theme';
+import { stackFromBottomOverlay } from './styles';
 
 const Stack = createStackNavigator();
 
@@ -30,4 +31,17 @@ const AppStack = () => (
   </Stack.Navigator>
 );
 
-export default AppStack;
+const ModalStack = () => {
+  return (
+    <Stack.Navigator mode="modal" headerMode="none">
+      <Stack.Screen name="AppStack" component={AppStack} />
+      <Stack.Screen 
+        name="Search" 
+        component={Screens.Search} 
+        options={{ ...stackFromBottomOverlay() }}
+      />
+    </Stack.Navigator>
+  )
+}
+
+export default ModalStack;

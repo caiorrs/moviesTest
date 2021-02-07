@@ -5,6 +5,8 @@ import { heightPercentage } from '~/utils/responsive';
 export const Wrapper = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
+  align-items: center;
+  justify-content: center;
 `;
 
 export const HeaderWrapper = styled.View``;
@@ -80,4 +82,26 @@ export const DescriptionTitle = styled.Text`
 export const DescriptionValue = styled.Text`
   color: ${({ theme }) => theme.colors.text};
   font-size: 15px;
+`;
+
+export const Touchable = styled.TouchableOpacity`
+  background-color: ${({ theme }) => theme.colors.accent};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  margin-top: 30px;
+`;
+
+export const ErrorText = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 18px;
+  max-width: 70%;
+  text-align: center;
+`;
+
+export const ReloadLabel = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 18px;
+  font-weight: bold;
 `;
