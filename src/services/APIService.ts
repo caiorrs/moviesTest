@@ -38,6 +38,10 @@ class API {
   static getMovieDetails({movie_id, language = 'en-US'}: Types.movieDetails): Promise<AxiosResponse<Types.movieDetailsResponse>>{
     return APIInstance.get(`movie/${movie_id}`, { params: { language } })
   }
+
+  static getMovieVideos({movie_id, language = 'en-US'}: Types.movieDetails): Promise<AxiosResponse<Types.movieVideosResponse>>{
+    return APIInstance.get(`movie/${movie_id}/videos`, { params: { language } })
+  }
 }
 
 export default API;

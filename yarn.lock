@@ -2886,6 +2886,11 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
+eme-encryption-scheme-polyfill@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/eme-encryption-scheme-polyfill/-/eme-encryption-scheme-polyfill-2.0.2.tgz#6d3edb6d95951883a499f2d6dafbd84a5574f8c3"
+  integrity sha512-tZXuxVUCV1GmlQBGGVVNAt6lXBUxjDFqIAPAhz4F5Z/TvCi/coojxcZGEO5k+KMt/dWRFmXaK5pxKCMehue/oA==
+
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -5040,6 +5045,11 @@ jsx-ast-utils@^2.2.3:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
+keymirror@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
+
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -5206,7 +5216,7 @@ lodash.unset@^4.5.2:
   resolved "https://registry.yarnpkg.com/lodash.unset/-/lodash.unset-4.5.2.tgz#370d1d3e85b72a7e1b0cdf2d272121306f23e4ed"
   integrity sha1-Nw0dPoW3Kn4bDN8tJyEhMG8j5O0=
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.3.0:
+lodash@^4.16.4, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.3.0:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
@@ -6306,7 +6316,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6469,6 +6479,29 @@ react-native-svg@^12.1.0:
   dependencies:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
+
+react-native-video-controls@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/react-native-video-controls/-/react-native-video-controls-2.7.1.tgz#52bd22ea83a964c9bf1e741e7ed6380ad0e28f1e"
+  integrity sha512-yoquLUx2x7EJOnDNGw0H4bb0gO4Io+ziFSDoDGGJqaT15IaXIiD+GCvCDbW9gLcUxsyLDwCr65sx8Yt2ZMvbCg==
+  dependencies:
+    lodash "^4.16.4"
+
+react-native-video@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-5.1.1.tgz#89a7989efeb8d404611c06154d1da227a745d7d8"
+  integrity sha512-zee8gRUrjPWRoZSEBiMebClqu1iAuCQNLjzqpmXFrRWEoJj7azM3BPqLQWJgsnfLiYUYGySeApC/G60THM5+tw==
+  dependencies:
+    keymirror "^0.1.1"
+    prop-types "^15.7.2"
+    shaka-player "^2.5.9"
+
+react-native-youtube@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-youtube/-/react-native-youtube-2.0.1.tgz#1b6275ca2c1db8e13539a59ccfda8ae8479b1590"
+  integrity sha512-CVzJyynKoEEMXHv/Nx+s8HdovnfVIZs0DIUjWUQsgEd+kbBubXJZTguCKj4WigI8SI1LJ0thF8SEGbdqW8oJkw==
+  dependencies:
+    prop-types "^15.5.0"
 
 react-native@0.63.4:
   version "0.63.4"
@@ -7036,6 +7069,13 @@ setprototypeof@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha512-JvdAWfbXeIGaZ9cILp38HntZSFSo3mWg6xGcJJsd+d4aRMOqauag1C63dJfDw7OaMYwEbHMOxEZ1lqVRYP2OAw==
+
+shaka-player@^2.5.9:
+  version "2.5.19"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.19.tgz#626226ad58d52ecb4e7f1424b818f75465940987"
+  integrity sha512-8DulS6TOBkyGFRVyv6oyC7b3NmwuFxQrC9GGPrJextvQkMBlRtqugbuH0OEUDpzcONNa/04+ho+2oBb18+QuSw==
+  dependencies:
+    eme-encryption-scheme-polyfill "^2.0.1"
 
 shallow-clone@^0.1.2:
   version "0.1.2"

@@ -421,10 +421,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-moviesTest/Pods-moviesTest-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_ROOT}/YoutubePlayer-in-WKWebView/WKYTPlayerView/WKYTPlayerView.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WKYTPlayerView.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -543,10 +545,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-moviesTest-moviesTestTests/Pods-moviesTest-moviesTestTests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+				"${PODS_ROOT}/YoutubePlayer-in-WKWebView/WKYTPlayerView/WKYTPlayerView.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WKYTPlayerView.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

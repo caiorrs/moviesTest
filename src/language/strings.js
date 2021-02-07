@@ -10,7 +10,7 @@ export const HomeStrings = {
 export const DetailStrings = {
   title: 'Details',
   loading: 'Please wait while loading',
-  overview: 'Overview',
+  overview: 'Summary',
   moreInfo: 'More Info',
   year: 'Year',
   revenue: 'Revenue',
