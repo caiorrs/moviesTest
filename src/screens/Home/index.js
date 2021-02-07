@@ -7,14 +7,14 @@ import type { discoverType } from '~/services/types';
 import { MoviesBanner, MoviesList } from '~/components';
 import { API } from '~/services';
 import { useLanguage } from '~/language';
+import { setByGenre } from '~/store/ducks/movies';
 
 const Home = () => {
-  const { loading: configLoading, configuration } = useSelector((state) => state.AppReducer);
-  const { trending, genres } = useSelector((state) => state.MoviesReducer);
+  const { loading: configLoading } = useSelector((state) => state.AppReducer);
+  const { trending, genres, byGenre } = useSelector((state) => state.MoviesReducer);
   const [latestPage, setLatestPage] = useState({});
   const dispatch = useDispatch();
   const { HomeStrings, DetailStrings } = useLanguage();
-
   const navigation = useNavigation();
 
   const getDiscoverMovies = async ({ page, with_genres }: discoverType) => {
@@ -30,8 +30,15 @@ const Home = () => {
   const getEveryGenre = async () => {
     const ids = genres?.genres?.reduce((acc, curr) => [...acc, curr.id], []);
     try {
-      const results = await Promise.all(ids.map((id) => getDiscoverMovies({ page: 1, with_genres: [id] })));
-      console.log({ results });
+      const results = await Promise.all(ids.map(async (id) => {
+        const result = await getDiscoverMovies({ page: 1, with_genres: [id] });
+        return {
+          result,
+          genreId: id,
+        };
+      }));
+      console.warn({ results: results[0].result.results[0].title });
+      dispatch(setByGenre(results));
     } catch (error) {
       console.warn(error.message);
     }
@@ -69,27 +76,20 @@ const Home = () => {
           movies={trending?.results}
           onChoose={onChooseMovie}
         />
-        <MoviesList
-          movies={trending?.results}
-          title="Filmes"
-          onEndReached={handleOnEndReached}
-          onChooseMovie={onChooseMovie}
-          genreId={1}
-        />
-        <MoviesList
-          movies={trending?.results}
-          title="Filmes"
-          onEndReached={handleOnEndReached}
-          onChooseMovie={onChooseMovie}
-          genreId={2}
-        />
-        <MoviesList
-          movies={trending?.results}
-          title="Filmes"
-          onEndReached={handleOnEndReached}
-          onChooseMovie={onChooseMovie}
-          genreId={3}
-        />
+        {byGenre?.map((genre) => {
+          // console.warn({ genre });
+          const genreName = genres?.genres?.find((item) => item.id === genre?.result?.genreId[0])?.name;
+          // console.warn(genre);
+          return (
+            <MoviesList
+              movies={genre?.result?.results}
+              title={genreName}
+              onEndReached={handleOnEndReached}
+              onChooseMovie={onChooseMovie}
+              genreId={genre?.result?.genreId}
+            />
+          );
+        })}
       </Scroll>
     </Wrapper>
   );

@@ -94,10 +94,28 @@ const MoviesReducer = (state = initialState, action) => {
 
     case Types.SET_BY_GENRE:
       // TODO: logic to not override previous values + separate results by genre
-      const current = { ...state.byGenre };
-      const finalObject = { ...current, page: action.genreResults.page, results: [...current.results, action.genreResults.results] };
+      // const current = { ...state.byGenre };
+      // const genreKey = String(action.genreResults.genreId);
+
+      // if (Object.keys(current).includes(genreKey)) {
+      //   current[genreKey] = { ...current[genreKey], page: action.genreResults.page, results: [...current[genreKey].results, ...action.genreResults.results] };
+      //   return {
+      //     ...state, byGenre: { ...current }, loadingByGenre: false, errorByGenre: null,
+      //   };
+      // }
+      // return {
+      //   ...state,
+      //   byGenre: {
+      //     ...current,
+      //     genreKey: {
+      //       page: action.genreResults.page, results: action.genreResults.results, total_results: action.genreResults.total_results, total_pages: action.genreResults.total_pages,
+      //     },
+      //   },
+      //   loadingByGenre: false,
+      //   errorByGenre: null,
+      // };
       return {
-        ...state, byGenre: finalObject, loadingByGenre: false, errorByGenre: null,
+        ...state, byGenre: action.genreResults, loadingByGenre: false, errorByGenre: false,
       };
     case Types.FETCH_BY_GENRE:
       return {

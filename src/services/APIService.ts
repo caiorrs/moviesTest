@@ -16,7 +16,7 @@ const APIInstance = axios.create({
 
 class API {
   static getDiscoverMovies({page=1, language="en-US", with_genres}: Types.discoverType): Promise<AxiosResponse<Types.discoverResponse>> {
-    return APIInstance.get('/discover/movie/', { params: { page, language, with_genres } });
+    return APIInstance.get('/discover/movie/', { params: { page, language, with_genres: with_genres.join(",") } });
   }
 
   static getTrending({ media_type="movie", time_window="week" }: Types.trendingType): Promise<AxiosResponse<Types.trendingResponse>> {
